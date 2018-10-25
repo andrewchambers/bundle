@@ -1,4 +1,4 @@
-# bundle
+# bundle - structured concurrency
 
 This go package provides structured concurrency and garbage collection of goroutines.
 
@@ -50,7 +50,7 @@ b = nil
 With some indirection and runtime.SetFinalizer, we can cancel our context in a safe way. sync.Waitgroup
 allows us to block until all workers have exited.
 
-# Influences
+## Influences
 
 
 https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/
