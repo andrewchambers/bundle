@@ -39,7 +39,6 @@ type bundle struct {
 	bundleCtx       context.Context
 	cancelOnce      sync.Once
 	cancelBundleCtx func()
-	closeOnce       sync.Once
 }
 
 func New(parentContext context.Context) *Bundle {
@@ -51,21 +50,12 @@ func New(parentContext context.Context) *Bundle {
 		cancelBundleCtx: cancelBundleCtx,
 	}
 
-	// The wait group starts at 1.
-	// and is decremented at cancel.
-	// Not certain this is needed, but
-	// the idea is that once the wait
-	// group reaches zero, no Go() calls
-	// can never create a goroutine.
-	b.wg.Add(1)
-
 	return &Bundle{
 		selfDestruct: newSelfDestruct(b),
 		bundle:       b,
 	}
 }
 
-// Go starts a function within the bundles context.
 func (b *bundle) Go(task func(ctx context.Context)) {
 	select {
 	case <-b.bundleCtx.Done():
@@ -82,26 +72,24 @@ func (b *bundle) Go(task func(ctx context.Context)) {
 	}()
 }
 
-// Cancel cancels all tasks in the bundle.
 func (b *bundle) Cancel() {
 	b.cancelOnce.Do(func() {
-		b.wg.Done()
 		b.cancelBundleCtx()
 	})
 }
 
-// Close cancels the bundle
-// and waits until they are completed.
-func (b *bundle) Close() {
-	b.closeOnce.Do(func() {
-		b.Cancel()
-		b.wg.Wait()
-	})
+func (b *bundle) Wait() {
+	b.wg.Wait()
 }
 
 // Go starts a function within the bundles context.
 func (b *Bundle) Go(task func(ctx context.Context)) {
 	b.bundle.Go(task)
+}
+
+// Wait waits for all goroutines in the bundle to exit.
+func (b *Bundle) Wait() {
+	b.bundle.Wait()
 }
 
 // Cancel cancels all tasks in the bundle.
@@ -112,5 +100,6 @@ func (b *Bundle) Cancel() {
 // Close cancels the bundle
 // and waits until they are completed.
 func (b *Bundle) Close() {
-	b.bundle.Close()
+	b.bundle.Cancel()
+	b.bundle.Wait()
 }
