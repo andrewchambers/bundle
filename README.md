@@ -47,8 +47,16 @@ b = nil
 With some indirection and runtime.SetFinalizer, we can cancel our context in a safe way. sync.Waitgroup
 allows us to block until all workers have exited.
 
+## Is this worth a library?
+
+Maybe not, I just found myself using sync.WaitGroup a lot, and this just wraps up how I use it.
+
+# Use cases
+
+Using the garbage collector to close contexts might mean is useful for things like infinite lazy
+lists, be creative.
+
 ## Influences
 
-
-https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/
-http://libdill.org/
+- https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/
+- http://libdill.org/
