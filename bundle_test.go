@@ -1,4 +1,4 @@
-package conc
+package bundle
 
 import (
 	"context"
