@@ -8,7 +8,7 @@ Structured cleanup
 
 ```
 b := bundle.New(context.Background())
-// Cancellation occurs when you call b.Close
+// Cancellation occurs when you call b.Close or b.Cancel
 defer b.Cancel()
 
 b.Go(func(ctx context.Context) {
@@ -19,11 +19,8 @@ b.Go(func(ctx context.Context) {
     // Do some more work...
 })
 
-// After b.Close() returns we know all goroutines have exited.
-b.Close()
-
-// The bundle has been closed, this is a noop.
-b.Go(func(ctx context.Context) {})
+// After b.Wait() returns we know all goroutines have exited.
+b.Wait()
 ```
 
 Garbage collection of goroutines:
