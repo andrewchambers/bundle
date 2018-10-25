@@ -2,9 +2,6 @@
 
 This go package provides structured concurrency and garbage collection of goroutines.
 
-This package is inspired by:
-
-
 ## Examples
 
 Structured cleanup
