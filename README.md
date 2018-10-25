@@ -30,7 +30,7 @@ Garbage collection of goroutines:
 b := bundle.New(context.Background()).Go
 
 b.Go(func(ctx context.Context) {
-    <- context.Done()
+    <- ctx.Done()
     fmt.Println("Bundle was garbage collected\n")
 })
 
@@ -50,6 +50,7 @@ allows us to block until all workers have exited.
 ## Is this worth a library?
 
 Maybe not, I just found myself using sync.WaitGroup a lot, and this just wraps up how I use it.
+Let me know in the issues if this has been done before, or in a better way.
 
 # Use cases
 
