@@ -27,7 +27,7 @@ Garbage collection of goroutines:
 
 ```
 
-b := bundle.New(context.Background()).Go
+b := bundle.New(context.Background())
 
 b.Go(func(ctx context.Context) {
     <- ctx.Done()
