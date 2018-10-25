@@ -19,13 +19,11 @@ b.Go(func(ctx context.Context) {
     // Do some more work...
 })
 
-// After b.Close() returns after all goroutines have exited.
+// After b.Close() returns we know all goroutines have exited.
 b.Close()
 
-b.Go(func(ctx context.Context) {
-    // The bundle has been closed, this is a
-    // noop.
-})
+// The bundle has been closed, this is a noop.
+b.Go(func(ctx context.Context) {})
 ```
 
 Garbage collection of goroutines:
