@@ -54,7 +54,7 @@ Let me know in the issues if this has been done before, or in a better way.
 
 # Use cases
 
-Using the garbage collector to close contexts might mean is useful for things like infinite lazy
+Using the garbage collector to close contexts might mean it is useful for things like infinite lazy
 lists, be creative.
 
 ## Influences
