@@ -41,7 +41,6 @@ b = nil
 // garbage collector, eventually you will see the printed output. 
 ```
 
-
 ## How it works
 
 With some indirection and runtime.SetFinalizer, we can cancel our context in a safe way. sync.Waitgroup
@@ -52,7 +51,7 @@ allows us to block until all workers have exited.
 Maybe not, I just found myself using sync.WaitGroup a lot, and this just wraps up how I use it.
 Let me know in the issues if this has been done before, or in a better way.
 
-# Use cases
+## Use cases
 
 Using the garbage collector to close contexts might mean it is useful for things like infinite lazy
 lists, be creative.
